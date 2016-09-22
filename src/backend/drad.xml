@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<component>
+  <element name="course">
+    <language>false</language>
+    <tag>false</tag>
+    <autopublish>false</autopublish>
+    <table>#__aftms_courses</table>
+  </element>
+  <element name="coursegroup">
+    <language>true</language>
+    <associationfield>Modal_CourseGroup</associationfield>
+    <associationcontext>com_aftms.coursegroup</associationcontext>
+    <tag>false</tag>
+    <autopublish>true</autopublish>
+    <table>#__aftms_course_groups</table>
+  </element>
+  <element name="classroom">
+    <language>true</language>
+    <associationfield>Classrooms</associationfield>
+    <associationcontext>com_aftms.classroom</associationcontext>
+    <tag>false</tag>
+    <autopublish>false</autopublish>
+    <table>#__aftms_classrooms</table>
+  </element>
+  <element name="campus">
+    <language>true</language>
+    <associationfield>Campuses</associationfield>
+    <associationcontext>com_aftms.campus</associationcontext>
+    <tag>false</tag>
+    <autopublish>false</autopublish>
+    <table>#__aftms_campuses</table>
+  </element>
+</component>

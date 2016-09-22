@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+  
+  <fieldset name="coursegroups" label="COM_AFTMS_CONFIG_FIELDSET_COURSEGROUPS">
+
+    <field name="show_pagination_limit"
+      type="radio"
+      class="btn-group btn-group-yesno"
+      default="1"
+      label="JGLOBAL_DISPLAY_SELECT_LABEL"
+      description="JGLOBAL_DISPLAY_SELECT_DESC">
+        <option value="1">JSHOW</option>
+        <option value="0">JHIDE</option>
+    </field>
+
+    <field name="show_pagination"
+      type="list"
+      default="2"
+      label="JGLOBAL_PAGINATION_LABEL"
+      description="JGLOBAL_PAGINATION_DESC">
+      <option value="0">JHIDE</option>
+      <option value="1">JSHOW</option>
+      <option value="2">JGLOBAL_AUTO</option>
+    </field>
+
+    <field name="show_pagination_results"
+      type="radio"
+      class="btn-group btn-group-yesno"
+      default="1"
+      label="JGLOBAL_PAGINATION_RESULTS_LABEL"
+      description="JGLOBAL_PAGINATION_RESULTS_DESC">
+      <option value="1">JSHOW</option>
+      <option value="0">JHIDE</option>
+    </field>
+      
+    </fieldset>
+
+	<fieldset
+		name="permissions"
+		label="JCONFIG_PERMISSIONS_LABEL"
+		description="JCONFIG_PERMISSIONS_DESC">
+
+		<field
+			name="rules"
+			type="rules"
+			label="JCONFIG_PERMISSIONS_LABEL"
+			class="inputbox"
+			validate="rules"
+			filter="rules"
+			component="com_aftms"
+			section="component" />
+      
+	</fieldset>
+</config>

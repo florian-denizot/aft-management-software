@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fields name="filter">
+		<field
+			name="search"
+			type="text"
+			label="COM_AFTMS_FILTER_SEARCH_DESC"
+			hint="JSEARCH_FILTER"
+		/>
+		<field
+			name="published"
+			type="status"
+			label="COM_AFTMS_FILTER_PUBLISHED"
+			description="COM_AFTMS_FILTER_PUBLISHED_DESC"
+			onchange="this.form.submit();"
+			>
+			<option value="">JOPTION_SELECT_PUBLISHED</option>
+		</field>
+		<field
+			name="type_id"
+			type="category"
+			label="COM_AFTMS_FILTER_TYPE"
+			description="COM_AFTMS_FILTER_TYPE_DESC"
+			onchange="this.form.submit();"
+      extension="com_aftms.coursetypes">
+			<option value="">COM_AFTMS_OPTION_SELECT_TYPE</option>
+		</field>
+    <field
+			name="category_id"
+			type="Category"
+			label="JOPTION_FILTER_CATEGORY"
+			description="JOPTION_FILTER_CATEGORY_DESC"
+			onchange="this.form.submit();"
+      extension="com_aftms.coursecategories">
+			<option value="">JOPTION_SELECT_CATEGORY</option>
+		</field>
+    <field
+			name="session_id"
+			type="Category"
+			label="COM_AFTMS_FILTER_SESSION"
+			description="JOPTION_FILTER_SESSION_DESC"
+			onchange="this.form.submit();"
+      extension="com_aftms.sessions">
+			<option value="">COM_AFTMS_OPTION_SELECT_SESSION</option>
+		</field>
+    <field
+			name="campus_id"
+			type="Campuses"
+			label="COM_AFTMS_FILTER_CENTRE"
+			description="JOPTION_FILTER_CENTRE_DESC"
+			onchange="this.form.submit();">
+		</field>
+	</fields>
+	<fields name="list">
+		<field
+			name="fullordering"
+			type="list"
+			label="COM_AFTMS_LIST_FULL_ORDERING"
+			description="COM_AFTMS_LIST_FULL_ORDERING_DESC"
+			onchange="this.form.submit();"
+			default="a.title ASC"
+			>
+			<option value="">JGLOBAL_SORT_BY</option>
+			<option value="a.ordering ASC">JGRID_HEADING_ORDERING_ASC</option>
+			<option value="a.ordering DESC">JGRID_HEADING_ORDERING_DESC</option>
+			<option value="a.published ASC">JSTATUS_ASC</option>
+			<option value="a.published DESC">JSTATUS_DESC</option>
+			<option value="a.title ASC">JGLOBAL_TITLE_ASC</option>
+			<option value="a.title DESC">JGLOBAL_TITLE_DESC</option>
+      <option value="a.access ASC">JGRID_HEADING_ACCESS_ASC</option>
+			<option value="a.access DESC">JGRID_HEADING_ACCESS_DESC</option>
+			<option value="a.created_by ASC">JAUTHOR_ASC</option>
+			<option value="a.created_by DESC">JAUTHOR_DESC</option>
+			<option value="a.created ASC">JDATE_ASC</option>
+			<option value="a.created DESC">JDATE_DESC</option>
+			<option value="a.id ASC">JGRID_HEADING_ID_ASC</option>
+			<option value="a.id DESC">JGRID_HEADING_ID_DESC</option>
+      <option value="t.id ASC">COM_AFTMS_HEADING_TYPE_ASC</option>
+      <option value="t.id DESC">COM_AFTMS_HEADING_TYPE_DESC</option>
+      <option value="s.id ASC">COM_AFTMS_HEADING_SESSION_ASC</option>
+      <option value="s.id DESC">COM_AFTMS_HEADING_SESSION_DESC</option>
+      <option value="a.start_date ASC">COM_AFTMS_HEADING_DATES_ASC</option>
+      <option value="a.start_date DESC">COM_AFTMS_HEADING_DATES_DESC</option>
+      <option value="campus_name ASC">COM_AFTMS_HEADING_CAMPUS_ASC</option>
+      <option value="campus_name DESC">COM_AFTMS_HEADING_CAMPUS_DESC</option>
+		</field>
+		<field
+			name="limit"
+			type="limitbox"
+			class="inputbox input-mini"
+			default="25"
+			label="COM_AFTMS_LIST_LIMIT"
+			description="COM_AFTMS_LIST_LIMIT_DESC"
+			onchange="this.form.submit();"
+		/>
+	</fields>
+</form>

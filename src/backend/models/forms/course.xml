@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset addfieldpath="/administrator/components/com_aftms/models/fields" >
+		<field name="id"  
+      type="text" 
+      class="readonly" 
+      label="JGLOBAL_FIELD_ID_LABEL"
+			description ="JGLOBAL_FIELD_ID_DESC" 
+      default="0"
+			readonly="true" />
+
+		<field name="asset_id" 
+      type="hidden" 
+      filter="unset" />
+
+		<field name="title" 
+      type="text" 
+      label="COM_AFTMS_FIELD_NAME_LABEL"
+			description="COM_AFTMS_FIELD_COURSE_NAME_DESC"
+			class="inputbox input-xxlarge input-large-text"
+			size="40"
+			required="true" />
+
+		<field name="alias" 
+      type="text" 
+      label="COM_AFTMS_FIELD_CODE_LABEL"
+			description="JFIELD_ALIAS_DESC"
+			class="inputbox" 
+      size="40" />
+      
+    <field name="sessionid" 
+      type="category"
+			label="COM_AFTMS_FIELD_SESSION_LABEL" 
+      description="COM_AFTMS_FIELD_COURSE_SESSION_DESC"
+			class="inputbox" 
+      extension="com_aftms.sessions"
+      required="true"/>
+    
+    <field name="groupid" 
+      type="Modal_CourseGroup"
+			label="COM_AFTMS_FIELD_COURSEGROUP_LABEL" 
+      description="COM_AFTMS_FIELD_COURSE_COURSEGROUP_DESC"
+			class="inputbox" 
+      edit="true"
+      clear="true"
+      required="true"
+      addfieldpath="/administrator/components/com_aftms/models/fields/modal"/>
+    
+    <field name="start_date" 
+      type="calendar" 
+      label="COM_AFTMS_FIELD_STARTDATE_LABEL"
+			description="COM_AFTMS_FIELD_COURSE_STARTDATE_DESC" 
+      class="inputbox" 
+      size="22"  
+			filter="server_utc"
+      required="true"/> 
+    
+    <field name="end_date" 
+      type="calendar" 
+      label="COM_AFTMS_FIELD_ENDDATE_LABEL"
+			description="COM_AFTMS_FIELD_COURSE_ENDDATE_DESC" 
+      class="inputbox" 
+      size="22"
+			filter="server_utc"
+      required="true"/>
+    
+    <field name="campusid" 
+      type="sql" 
+      label="COM_AFTMS_FIELD_CAMPUS_LABEL"
+			description="COM_AFTMS_FIELD_COURSE_CAMPUS_DESC" 
+      class="inputbox" 
+      required="true"
+      sql_select="ca.*"
+      sql_from="#__aftms_campuses AS ca"
+      sql_order="ca.ordering ASC"
+      key_field="id"
+      value_field="title"
+      header="COM_AFTMS_OPTION_SELECT_CAMPUS"/>
+    
+    <field name="classroomid" 
+      type="sql" 
+      label="COM_AFTMS_FIELD_CLASSROOM_LABEL"
+			description="COM_AFTMS_FIELD_COURSE_CLASSROOM_DESC" 
+      class="inputbox" 
+      required="false"
+      sql_select="cl.*"
+      sql_from="#__aftms_classrooms AS cl"
+      sql_order="cl.ordering ASC"
+      sql_filter="campusid"
+      sql_default_campusid="0"
+      key_field="id"
+      value_field="title"
+      header="COM_AFTMS_OPTION_SELECT_CLASSROOM"/>
+      
+    <field name="date_pattern"
+      type="Repeatable"
+      icon="list"
+      label="COM_AFTMS_FIELD_DATE_PATTERN_LABEL"
+      description="COM_AFTMS_FIELD_COURSE_DATE_PATTERN_DESC">
+        
+      <fieldset hidden="true" name="date_pattern_modal" repeat="true">
+        <field name="weekday"
+          type="list" 
+          label="COM_AFTMS_FIELD_WEEKDAY_LABEL"
+          description="COM_AFTMS_FIELD_COURSE_WEEKDAY_DESC">
+          <option value="">COM_AFTMS_OPTION_SELECT_WEEKDAY</option>
+          <option value="COM_AFTMS_MON">COM_AFTMS_MONDAY</option>
+          <option value="COM_AFTMS_TUE">COM_AFTMS_TUESDAY</option>
+          <option value="COM_AFTMS_WED">COM_AFTMS_WEDNESDAY</option>
+          <option value="COM_AFTMS_THU">COM_AFTMS_THURSDAY</option>
+          <option value="COM_AFTMS_FRI">COM_AFTMS_FRIDAY</option>
+          <option value="COM_AFTMS_SAT">COM_AFTMS_SATURDAY</option>
+          <option value="COM_AFTMS_SUN">COM_AFTMS_SUNDAY</option>
+        </field>
+        <field name="start_hour"
+          type="integer"
+          label="COM_AFTMS_FIELD_START_HOUR_LABEL"
+          description="COM_AFTMS_FIELD_COURSE_START_HOUR_DESC"
+          first="0"
+          last="23"
+          step="1"/>
+        <field name="start_min"
+          type="Minutes"
+          label="COM_AFTMS_FIELD_START_MIN_LABEL"
+          description="COM_AFTMS_FIELD_COURSE_START_MIN_DESC"
+          default="00"/>
+        <field name="end_hour"
+          type="integer"
+          label="COM_AFTMS_FIELD_END_HOUR_LABEL"
+          description="COM_AFTMS_FIELD_COURSE_END_HOUR_DESC"
+          first="0"
+          last="23"
+          step="1"/>
+        <field name="end_min"
+          type="Minutes"
+          label="COM_AFTMS_FIELD_END_MIN_LABEL"
+          description="COM_AFTMS_FIELD_COURSE_END_MIN_DESC"
+          default="00"/>
+      </fieldset>
+    </field>
+    
+    <field name="price_override" 
+      type="textarea" 
+      label="COM_AFTMS_FIELD_PRICE_OVERRIDE_LABEL"
+			description="COM_AFTMS_FIELD_COURSE_PRICE_OVERRIDE_DESC" 
+      class="inputbox" 
+      required="false"
+      rows="5"/>
+      
+    <field name="url" 
+      type="url" 
+      label="COM_AFTMS_FIELD_URL_LABEL"
+			description="COM_AFTMS_FIELD_COURSE_URL_DESC" 
+      class="inputbox" 
+      required="true"/>
+
+		<field name="published" 
+      type="list" 
+      label="JSTATUS"
+			description="JFIELD_PUBLISHED_DESC" 
+      class="chzn-color-state"
+			filter="intval" 
+      size="1" 
+      default="1">
+			<option value="1">JPUBLISHED</option>
+			<option value="0">JUNPUBLISHED</option>
+			<option value="2">JARCHIVED</option>
+			<option value="-2">JTRASHED</option>
+		</field>
+
+		<field name="created_time" 
+      type="calendar" 
+      label="JGLOBAL_FIELD_CREATED_LABEL"
+			description="JGLOBAL_FIELD_CREATED_DESC" 
+      class="inputbox" 
+      size="22"
+			format="%Y-%m-%d %H:%M:%S" 
+      filter="user_utc" />
+
+		<field name="created_by" 
+      type="user"
+			label="JGLOBAL_FIELD_CREATED_BY_LABEL" 
+      description="JGLOBAL_FIELD_CREATED_BY_DESC" />
+
+		<field name="modified_time" 
+      type="calendar" 
+      class="readonly"
+			label="JGLOBAL_FIELD_MODIFIED_LABEL" 
+      description="COM_AFTMS_FIELD_COURSE_MODIFIED_DESC"
+			size="22" 
+      readonly="true" 
+      format="%Y-%m-%d %H:%M:%S" 
+      filter="user_utc" />
+
+		<field name="modified_by" 
+      type="user"
+      label="JGLOBAL_FIELD_MODIFIED_BY_LABEL"
+      description="JGLOBAL_FIELD_MODIFIED_BY_DESC"
+      class="readonly"
+      readonly="true"
+      filter="unset"/>
+
+		<field name="checked_out" 
+      type="hidden" 
+      filter="unset" />
+
+		<field name="checked_out_time" 
+      type="hidden" 
+      filter="unset" />
+
+		<field name="ordering" 
+      type="text" 
+      label="JFIELD_ORDERING_LABEL"
+			description="JFIELD_ORDERING_DESC" 
+      class="inputbox" 
+      size="6"
+			default="0" />
+
+		<field name="metakey" 
+      type="textarea"
+			label="JFIELD_META_KEYWORDS_LABEL" 
+      description="JFIELD_META_KEYWORDS_DESC"
+			class="inputbox" 
+      rows="3" 
+      cols="30" />
+
+		<field name="metadesc" 
+      type="textarea"
+			label="JFIELD_META_DESCRIPTION_LABEL" 
+      description="JFIELD_META_DESCRIPTION_DESC"
+			class="inputbox" 
+      rows="3" 
+      cols="30" />
+
+		<field name="access" 
+      type="accesslevel" 
+      label="JFIELD_ACCESS_LABEL"
+			description="JFIELD_ACCESS_DESC" 
+      size="1" />
+
+		<field name="rules" 
+      type="rules" 
+      label="JFIELD_RULES_LABEL"
+			translate_label="false" 
+      class="inputbox" 
+      filter="rules"
+			component="com_aftms" 
+      section="course" 
+      validate="rules"/>
+
+	</fieldset>  
+  
+	<fields name="metadata" 
+    label="JGLOBAL_FIELDSET_METADATA_OPTIONS">
+		
+    <fieldset name="jmetadata"
+			label="JGLOBAL_FIELDSET_METADATA_OPTIONS">
+
+			<field name="robots"
+				type="list"
+				label="JFIELD_METADATA_ROBOTS_LABEL"
+				description="JFIELD_METADATA_ROBOTS_DESC">
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="index, follow">JGLOBAL_INDEX_FOLLOW</option>
+				<option value="noindex, follow">JGLOBAL_NOINDEX_FOLLOW</option>
+				<option value="index, nofollow">JGLOBAL_INDEX_NOFOLLOW</option>
+				<option value="noindex, nofollow">JGLOBAL_NOINDEX_NOFOLLOW</option>
+			</field>
+
+			<field name="rights" 
+        type="textarea" 
+        label="JFIELD_META_RIGHTS_LABEL"
+				description="JFIELD_META_RIGHTS_DESC" 
+        required="false" 
+        filter="string"
+				cols="30" 
+        rows="2" />
+        
+			<field name="xreference" 
+        type="text"
+				label="JFIELD_METADATA_XREFERENCE_LABEL"
+				description="JFIELD_METADATA_XREFERENCE_DESC"
+				class="inputbox" 
+        size="20" />
+
+		</fieldset>
+    
+	</fields>
+
+</form>

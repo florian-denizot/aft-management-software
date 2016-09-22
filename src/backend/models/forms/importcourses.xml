@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+  <fieldset name="default"
+		label="COM_AFTMS_IMPORT_COURSES_DEFAULT_LABEL">
+    
+    <field name="heading" type="note" label="COM_AFTMS_FIELD_IMPORT_COURSES_HEADING_LABEL" />
+    
+    <field name="classroomid" 
+      type="Classrooms" 
+      label="COM_AFTMS_FIELD_LOCATION_LABEL"
+			description="COM_AFTMS_FIELD_COURSE_IMPORT_LOCATION_DESC" 
+      class="inputbox" 
+      required="true"/>
+      
+    <field name="sessionid" 
+      type="category"
+			label="COM_AFTMS_FIELD_SESSION_LABEL" 
+      description="COM_AFTMS_FIELD_COURSE_IMPORT_SESSION_DESC"
+			class="inputbox" 
+      extension="com_aftms.sessions"
+      required="true"
+      published="1,-2"/>
+    
+    <field name="file" 
+      type="file"
+      label="COM_AFTMS_FIELD_EXCEL_FILE_LABEL"
+      description="COM_AFTMS_FIELD_IMPORT_COURSES_EXCEL_FILE_DESC"
+      required="true"
+      accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|application/vnd.ms-excel"/>
+
+    <field name="update" 
+      type="checkbox"  
+      label="COM_AFTMS_FIELD_UPDATE_COURSES_LABEL"
+			description="COM_AFTMS_FIELD_IMPORT_COURSES_UPDATE_COURSES_DESC"/>
+      
+	</fieldset>
+</form>
