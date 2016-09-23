@@ -9,8 +9,6 @@
 
 defined('_JEXEC') or die;
 
-require_once(JPATH_COMPONENT.DS.'lib'.DS.'views'.DS.'viewlist.php');
-
 /**
  * HTML View class for the WebLinks component
  *
@@ -18,7 +16,7 @@ require_once(JPATH_COMPONENT.DS.'lib'.DS.'views'.DS.'viewlist.php');
  * @subpackage  com_weblinks
  * @since       1.5
  */
-class AFTMSViewCourseGroups extends DefaultViewList
+class AFTMSViewCourseGroups extends DradSiteViewList
 {
 	protected $items;
 

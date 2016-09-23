@@ -1,19 +1,29 @@
 <?php
-
-defined('_JEXEC') or die;
-
-require_once(JPATH_COMPONENT.DS.'lib'.DS.'models'.DS.'modellist.php');
-
 /**
- * Methods supporting a list of coursegroups records.
- *
  * @package     Joomla.Site
  * @subpackage  com_aftms
  *
- * @since       1.6
+ * @copyright   Copyright (C) 2016 Alliance Francaise Toronto. All rights reserved.
+ * @license     LTBD
  */
-class AFTMSModelCourseGroups extends DefaultModelList
+
+defined('_JEXEC') or die;
+
+use Joomla\Registry\Registry;
+use Joomla\Utilities\ArrayHelper;
+
+/**
+ * Coursegroup list model
+ */
+class AFTMSModelCourseGroups extends DradSiteModelList
 {
+  /*
+   * The name of the config section to load in the drad config file.
+   * 
+   * @var   string 
+   */
+  protected $drad_element = 'coursegroup';
+  
   protected $tableName = '#__aftms_course_groups';
   
   /**
