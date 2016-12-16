@@ -1,33 +1,19 @@
 <?php
 /**
  * @package     Joomla.Site
- * @subpackage  com_weblinks
+ * @subpackage  com_aftms
  *
- * @copyright   Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright   Copyright (C) 2016 Alliance Francaise Toronto. All rights reserved.
+ * @license     LTBD
  */
 
 defined('_JEXEC') or die;
 
 /**
- * HTML View class for the WebLinks component
- *
- * @package     Joomla.Site
- * @subpackage  com_weblinks
- * @since       1.5
+ * Course group list HTML View class
  */
 class AFTMSViewCourseGroups extends DradSiteViewList
 {
-	protected $items;
-
-	protected $pagination;
-
-	protected $state;
-  
-  public $filterForm;
-  
-  protected $activeFilters;
-  
   protected $pageTitle = 'COM_AFTMS_COURSES_PAGE_TITLE';
   
   
@@ -39,15 +25,9 @@ class AFTMSViewCourseGroups extends DradSiteViewList
 	 * @return  mixed  A string if successful, otherwise a Error object.
 	 */
   public function display($tpl = null)
-	{
-    $state		      = $this->get('State');
+	{  
+    $this->campusList = array();
     
-    
-    $this->min_year = $state->get('age_range.min_year', 0);
-    $this->min_month = $state->get('age_range.min_month', 0);
-    $this->max_year = $state->get('age_range.max_year', 0);
-    $this->max_month = $state->get('age_range.max_month', 0);
-  
     return parent::display($tpl);
   }
   
@@ -56,8 +36,6 @@ class AFTMSViewCourseGroups extends DradSiteViewList
 	 * Returns an array of fields the table can be sorted by
 	 *
 	 * @return  array  Array containing the field name to sort by as the key and display text as value
-	 *
-	 * @since   3.0
 	 */
 	protected function getSortFields()
 	{

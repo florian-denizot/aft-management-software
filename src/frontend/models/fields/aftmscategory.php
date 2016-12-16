@@ -9,7 +9,7 @@
 
 defined('JPATH_PLATFORM') or die;
 
-JFormHelper::loadFieldClass('list');
+JFormHelper::loadFieldClass('checkboxes');
 
 /**
  * Form Field class for the Joomla Platform.
@@ -19,7 +19,7 @@ JFormHelper::loadFieldClass('list');
  * @subpackage  Form
  * @since       11.1
  */
-class JFormFieldAFTMSCategory extends JFormFieldList
+class JFormFieldAFTMSCategory extends JFormFieldCheckboxes
 {
 	/**
 	 * The form field type.
@@ -31,17 +31,14 @@ class JFormFieldAFTMSCategory extends JFormFieldList
 
 	/**
 	 * Method to get the field options for category
-	 * Use the extension attribute in a form to specify the.specific extension for
+	 * Use the extension attribute in a form to specify the specific extension for
 	 * which categories should be displayed.
 	 * Use the show_root attribute to specify whether to show the global category root in the list.
 	 *
 	 * @return  array    The field option objects.
-	 *
-	 * @since   11.1
 	 */
 	protected function getOptions()
-	{
-		$options = array();
+	{    
 		$extension = $this->element['extension'] ? (string) $this->element['extension'] : (string) $this->element['scope'];
 		$published = (string) $this->element['published'];
 		$language = (string) $this->element['language'];
@@ -56,24 +53,22 @@ class JFormFieldAFTMSCategory extends JFormFieldList
     if ($language)
     {
       $config['filter.language'] = array($currentLang->getTag(), '*');
-    } 
+    }
     
 		// Load the category options for a given extension.
 		if (!empty($extension))
 		{
-
 			$options = JHtml::_('category.options', $extension, $config);
-
+      
 			// Verify permissions.  If the action attribute is set, then we scan the options.
 			if ((string) $this->element['action'])
 			{
-
 				// Get the current user object.
 				$user = JFactory::getUser();
 
 				foreach ($options as $i => $option)
-				{
-					/*
+				{          
+          /*
 					 * To take save or create in a category you need to have create rights for that category
 					 * unless the item is already in that category.
 					 * Unset the option if the user isn't authorised for it. In this field assets are always categories.
@@ -83,12 +78,7 @@ class JFormFieldAFTMSCategory extends JFormFieldList
 						unset($options[$i]);
 					}
 				}
-
-			}
-
-			if (isset($this->element['show_root']))
-			{
-				array_unshift($options, JHtml::_('select.option', '0', JText::_('JGLOBAL_ROOT')));
+        
 			}
 		}
 		else

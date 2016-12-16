@@ -2,32 +2,49 @@
 defined('_JEXEC') or die;
 
 JHtml::_('bootstrap.tooltip');
-JHtml::_('behavior.keepalive');
 
 $defaultCourseImage= JUri::base() . '/media/com_aftms/images/default_course.png';
 ?>
-
+<div class="row-fluid">
+  <div class="span4 offset1">
+    <strong><?php echo JText::_('COM_AFTMS_COURSES'); ?></strong>
+  </div>
+   <div class="span3">
+    <strong><?php echo JText::_('COM_AFTMS_AGE'); ?></strong>
+  </div>
+  <div class="span2">
+    <strong><?php echo JText::_('COM_AFTMS_CATEGORY'); ?></strong>
+  </div>
+  <div class="span2">
+    <strong><?php echo JText::_('COM_AFTMS_LEVEL'); ?></strong>
+  </div>
+</div>
 <?php foreach ($this->items as $i => $item) : ?>
   <?php if(!isset($item->image)): ?>
     <?php $item->image = $defaultCourseImage; ?>
   <?php endif; ?>
 
-  <div class="row" id="course_group_<?php echo $item->id; ?>">
+  <div class="row-fluid" id="course_group_<?php echo $item->id; ?>">
     
-    <div class="col-md-1">
+    <div class="span1">
       <a href="<?php echo JRoute::_('index.php?option=com_aftms&view=coursegroup&id='. $item->id); ?>">
         <img src="<?php echo $item->image; ?>" alt="<?php echo $this->escape($item->title); ?>" class="img-responsive">
       </a>
     </div>
     
-    <div class="col-md-6">
+    <div class="span4">
       <a href="<?php echo JRoute::_('index.php?option=com_aftms&view=coursegroup&id='. $item->id); ?>">
         <strong><?php echo $item->title; ?></strong>
       </a>
     </div>
-    
-    <div class="col-md-5">
-      <?php echo $item->category_title ?></small>
+    <div class="span3">
+      <?php echo $item->category_title; ?></small>
+    </div>
+    <div class="span3">
+      <?php echo $item->category_title; ?></small>
+    </div>
+    <div class="span4">
+      <?php echo $item->simple_lvl_text; ?></small>
     </div>
   </div>
 <?php endforeach; ?>

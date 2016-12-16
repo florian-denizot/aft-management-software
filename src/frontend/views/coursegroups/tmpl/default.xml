@@ -6,12 +6,6 @@
 		</message>
 	</layout>
   
-  <fields name="request">
-		<fieldset name="request">
-			
-		</fieldset>
-	</fields>
-  
   <fields name="params">
     <fieldset name="basic" label="COM_AFTMS_MENU_FIELDSET_OPTIONS">
 

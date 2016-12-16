@@ -26,14 +26,14 @@ abstract class AFTMSHelperRoute
 	/**
 	 * @param   integer  The route of the content item
 	 */
-	public static function getCourseGroupsRoute($min_year, $min_month, $max_year, $max_month, $language = 0)
+	public static function getCourseGroupsRoute($language = 0)
 	{
 		$needles = array(
-			'coursegroups'  => array((int) $min_year, (int) $min_month, (int) $max_year, (int) $max_month)
+			'coursegroups'  => array()
 		);
     
 		//Create the link
-		$link = 'index.php?option=com_aftms&view=coursegroups&min_year='. $min_year . '&min_month=' . $min_month . '&max_year=' .  $max_year . '&max_month=' .  $max_month;
+		$link = 'index.php?option=com_aftms&view=coursegroups';
 		
 		if ($language && $language != "*" && JLanguageMultilang::isEnabled())
 		{

@@ -32,6 +32,18 @@ class AFTMSHelper extends JHelperContent
       return false;
     }
   }
+  
+  public static function getSimpleLevelLabel($id)
+  {
+    $levelArray = array(
+      1 => jText::_('COM_AFTMS_BEGINNER'),
+      2 => jText::_('COM_AFTMS_INTERMEDIATE'),
+      3 => jText::_('COM_AFTMS_ADVANCED')
+    );
+    
+    return $levelArray[$id];
+    
+  }
 
   public static function displayDatePatterns($date_patterns = array())
   {
@@ -148,7 +160,7 @@ class AFTMSHelper extends JHelperContent
 	 *
 	 * @return  array
 	 */
-	public static function getCentreOptions($lang = '')
+	public static function getCampusOptions($lang = '')
 	{ 
 		$options = array();
 

@@ -1,53 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
-	<fields name="filter">
-		<field
-			name="category_id"
-			type="AFTMSCategory"
-			label="JOPTION_FILTER_CATEGORY"
-			description="JOPTION_FILTER_CATEGORY_DESC"
-      extension="com_aftms.coursecategories"
-      language="true"
-      published="1"
-      addfieldpath="/components/com_aftms/models/fields"
-      class="form-control">
-			<option value=""></option>
-		</field>
-    <field
-			name="frequency"
-			type="list"
-			label="COM_AFTMS_FILTER_FREQUENCY"
-			description="COM_AFTMS_FILTER_FREQUENCY_DESC"
-      class="form-control">
-			<option value=""></option>
-      <option value="1">COM_AFTMS_FILTER_FREQUENCY_ONCE</option>
-      <option value="2">COM_AFTMS_FILTER_FREQUENCY_TWICE</option>
-      <option value="3">COM_AFTMS_FILTER_FREQUENCY_THREE_TIME</option>
-      <option value="4">COM_AFTMS_FILTER_FREQUENCY_FOUR_TIME</option>
-      <option value="5">COM_AFTMS_FILTER_FREQUENCY_FIVE_TIME</option>
-		</field>
-    <field
-			name="level_id"
-			type="AFTMSCategory"
-			label="COM_AFTMS_FILTER_LEVEL"
-			description="COM_AFTMS_FILTER_LEVEL_DESC"
-      extension="com_aftms.levels"
-      language="true"
-      published="1"
-      addfieldpath="/components/com_aftms/models/fields"
-      class="form-control">
-			<option value=""></option>
-		</field>
-    <field
-			name="campus_id"
-			type="Centres"
-			label="COM_AFTMS_FILTER_CENTRE"
-			description="COM_AFTMS_FILTER_CENTRE_DESC"
-      addfieldpath="/components/com_aftms/models/fields"
-      language="true"
-      class="form-control">
-			<option value=""></option>
-		</field>
+	<fields name="filter" addfieldpath="/components/com_aftms/models/fields">
+      <field
+        name="category_id"
+        type="AFTMSCategory"
+        label="JOPTION_FILTER_CATEGORY"
+        description="JOPTION_FILTER_CATEGORY_DESC"
+        extension="com_aftms.coursecategories"
+        language="true"
+        published="1"
+        multiple="true"
+        default="none">
+      </field>
+     
+      <field
+        name="frequency"
+        type="checkboxes"
+        label="COM_AFTMS_FILTER_FREQUENCY"
+        description="COM_AFTMS_FILTER_FREQUENCY_DESC"
+        multiple="true"
+        default="none">
+        <option value="1">COM_AFTMS_FILTER_FREQUENCY_ONCE</option>
+        <option value="2">COM_AFTMS_FILTER_FREQUENCY_TWICE</option>
+        <option value="3">COM_AFTMS_FILTER_FREQUENCY_THREE_TIME</option>
+        <option value="4">COM_AFTMS_FILTER_FREQUENCY_FOUR_TIME</option>
+        <option value="5">COM_AFTMS_FILTER_FREQUENCY_FIVE_TIME</option>
+      </field>
+      
+      <field
+        name="level_id"
+        type="AFTMSCategory"
+        label="COM_AFTMS_FILTER_LEVEL"
+        description="COM_AFTMS_FILTER_LEVEL_DESC"
+        extension="com_aftms.levels"
+        language="true"
+        published="1"
+        multiple="true"
+        default="none">
+      </field>
+      
+      <field
+        name="campus_id"
+        type="Campuses"
+        label="COM_AFTMS_FILTER_CENTRE"
+        description="COM_AFTMS_FILTER_CENTRE_DESC"
+        language="true"
+        multiple="true"
+        default="none">
+      </field>
+      
 	</fields>
 	<fields name="list">
 		<field

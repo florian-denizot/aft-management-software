@@ -2,27 +2,18 @@
 /**
  * @package     Joomla.Administrator
  * @subpackage  com_aftms
+ *
+ * @copyright   Copyright (C) 2016 Alliance Francaise Toronto. All rights reserved.
+ * @license     LTBD
  */
 
 defined('_JEXEC') or die;
 
-require_once(JPATH_COMPONENT_ADMINISTRATOR.DS.'lib'.DS.'tables'.DS.'table.php');
-
-/**
- * @package     Joomla.Administrator
- * @subpackage  com_aftms
- */
-class AFTMSTableCourseGroups extends DefaultTable
+class AFTMSTableCourseGroups extends DradAdminTableTable
 {
-  protected $name = 'CourseGroups';
+  protected $drad_element = 'coursegroup';
   
-	/**
-	 * @param   JDatabaseDriver  A database connector object
-	 */
-	public function __construct(&$db)
-	{
-		parent::__construct('#__aftms_course_groups', 'id', $db);
-	}
+  protected $text_prefix = 'COM_AFTMS_TABLE_COURSEGROUPS';
   
   /**
 	 * Method to perform sanity checks on the JTable instance properties to ensure
@@ -33,7 +24,6 @@ class AFTMSTableCourseGroups extends DefaultTable
 	 * @return  boolean  True if the instance is sane and able to be stored in the database.
 	 *
 	 * @link    http://docs.joomla.org/JTable/check
-	 * @since   11.1
 	 */
   public function check()
   {  
