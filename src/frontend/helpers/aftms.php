@@ -42,7 +42,41 @@ class AFTMSHelper extends JHelperContent
     );
     
     return $levelArray[$id];
-    
+  }
+  
+  /**
+    * Generate a readable string representing the age range for a coursegroup
+    *
+    * @param int $minAgeMonth
+    * @param int $minAgeYear
+    * @param int $maxAgeMonth
+    * @param int $maxAgeYear
+    * @return String
+    */
+  public static function getAgeRangeLabel($minAgeMonth, $minAgeYear, $maxAgeMonth, $maxAgeYear)
+  {
+    if((int)$minAgeYear >= 18)
+    {
+      return jText::_('COM_AFTMS_ADULTS');
+    }
+    else
+    {
+      $ageRangeString = '';
+      
+      $minAgeMonthText = '';
+      $minAgeYearText = '';
+      $maxAgeMonthText = '';
+      $maxAgeMonthText = '';
+      
+      if($minAgeMonth)
+      {
+        $minMonthText = jText::sprintf('COM_AFTMS_AGE_RANGE_MONTH', $minAgeMonth);
+      }
+      
+      $ageRangeString = 
+      
+      return $ageRangeString;
+    }
   }
 
   public static function displayDatePatterns($date_patterns = array())
@@ -190,5 +224,4 @@ class AFTMSHelper extends JHelperContent
 
 		return $options;
 	}
-  
 }

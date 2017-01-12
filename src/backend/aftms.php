@@ -15,7 +15,7 @@ if(!defined('DS'))
 	define('DS', DIRECTORY_SEPARATOR);
 }
 
-if (!JFactory::getUser()->authorise('core.manage', 'com_aftms'))
+if(!JFactory::getUser()->authorise('core.manage', 'com_aftms'))
 {
 	return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
 }

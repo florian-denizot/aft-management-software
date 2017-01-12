@@ -34,42 +34,47 @@ $filterFields = $this->filterForm->getFieldset('filter');
     </div>
   <?php endif; ?>
   
-  <form method="post" action="<?php echo JRoute::_(AFTMSHelperRoute::getCourseGroupsRoute()); ?>" method="post" name="adminForm" id="adminForm">
-    <fieldset class="form">
-      <legend><?php echo JText::_('COM_AFTMS_FILTER_COURSES_BY'); ?></legend>
-      <?php $filters = $this->filterForm->getGroup('filter'); ?>
-      
-      <?php if ($filters): ?>
-        <?php foreach ($filters as $fieldName => $field) : ?>
-          <?php if ($fieldName != 'filter_search') : ?>
-            <?php echo $field->label; ?>
-            <?php echo $field->input; ?>
+  <div class="row">
+    <div class="span3">
+      <form method="post" action="<?php echo JRoute::_(AFTMSHelperRoute::getCourseGroupsRoute()); ?>" method="post" name="adminForm" id="adminForm">
+        <fieldset class="form">
+          <legend><?php echo JText::_('COM_AFTMS_FILTER_COURSES_BY'); ?></legend>
+          <?php $filters = $this->filterForm->getGroup('filter'); ?>
+
+          <?php if ($filters): ?>
+            <?php foreach ($filters as $fieldName => $field) : ?>
+              <?php if ($fieldName != 'filter_search') : ?>
+                <?php echo $field->label; ?>
+                <?php echo $field->input; ?>
+              <?php endif; ?>
+            <?php endforeach; ?>
           <?php endif; ?>
-        <?php endforeach; ?>
-      <?php endif; ?>
-      
-      <div class="controls">
-        <input type="submit" class="btn btn-primary" name="submit" value="<?php echo JText::_('COM_AFTMS_SEARCH'); ?>"/>
-      </div>
-    </fieldset>
-    <input type="hidden" name="task" value="" />
-    <?php echo JHtml::_('form.token'); ?>
-  </form>
+
+          <div class="controls">
+            <input type="submit" class="btn btn-primary" name="submit" value="<?php echo JText::_('COM_AFTMS_SEARCH'); ?>"/>
+          </div>
+        </fieldset>
+        <input type="hidden" name="task" value="" />
+        <?php echo JHtml::_('form.token'); ?>
+      </form>
   
-  <!-- display a custom module position : aftms-coursegroups-sidebar -->
-  <div>
-    <?php JPluginHelper::importPlugin('content'); ?>
-    <?php echo JHtml::_('content.prepare', '{loadposition aftms-coursegroups-sidebar}', '', 'mod_custom.content'); ?>
-  </div>
-  
-  <div>
-    <?php if (empty($this->items)) : ?>
-      <div class="alert alert-info">
-        <?php echo JText::_('JGLOBAL_SELECT_NO_RESULTS_MATCH'); ?>
+      <!-- display a custom module position : aftms-coursegroups-sidebar -->
+      <div>
+        <?php JPluginHelper::importPlugin('content'); ?>
+        <?php echo JHtml::_('content.prepare', '{loadposition aftms-coursegroups-sidebar}', '', 'mod_custom.content'); ?>
       </div>
-    <?php else : ?>
-      <?php echo $this->loadTemplate('coursegroups'); ?>
-      <?php echo JLayoutHelper::render('joomla.form.letmeknow', $this); ?>
-    <?php endif ?>
+    </div>
+    <div class="span9">    
+      <div>
+        <?php if (empty($this->items)) : ?>
+          <div class="alert alert-info">
+            <?php echo JText::_('JGLOBAL_SELECT_NO_RESULTS_MATCH'); ?>
+          </div>
+        <?php else : ?>
+          <?php echo $this->loadTemplate('coursegroups'); ?>
+          <?php echo JLayoutHelper::render('joomla.form.letmeknow', $this); ?>
+        <?php endif ?>
+      </div>
+    </div>
   </div>
 </div>
