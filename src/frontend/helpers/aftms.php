@@ -5,7 +5,6 @@
  *
  * @package     Joomla.Site
  * @subpackage  com_aftms
- * @since       1.6
  */
  
 class AFTMSHelper extends JHelperContent
@@ -64,16 +63,45 @@ class AFTMSHelper extends JHelperContent
       $ageRangeString = '';
       
       $minAgeMonthText = '';
+      $minAndText = '';
       $minAgeYearText = '';
       $maxAgeMonthText = '';
+      $maxAndText = "";
       $maxAgeMonthText = '';
       
-      if($minAgeMonth)
+      if((int)$minAgeMonth)
       {
-        $minMonthText = jText::sprintf('COM_AFTMS_AGE_RANGE_MONTH', $minAgeMonth);
+        $minMonthText = jText::sprintf('COM_AFTMS_AGE_RANGE_MONTHS', $minAgeMonth);
       }
       
-      $ageRangeString = 
+      if((int)$minAgeYear)
+      {
+        $minYearText = $minAgeYear;
+      }
+      
+      if((int)$minAgeMonth && (int)$minAgeYear)
+      {
+        $minAndText = ' and ';
+        $minYearText = jText::sprintf('COM_AFTMS_AGE_RANGE_YEARS', $minAgeYear);
+      }
+      
+      if((int)$maxAgeMonth)
+      {
+        $maxMonthText = jText::sprintf('COM_AFTMS_AGE_RANGE_MONTHS', (int)$maxAgeMonth);
+      }
+      
+      if((int)$maxAgeYear)
+      {
+        $maxYearText = $maxAgeYear;
+      }
+      
+      if((int)$maxAgeMonth && (int)$maxAgeYear)
+      {
+        $maxAndText = ' and ';
+        $maxYearText = jText::sprintf('COM_AFTMS_AGE_RANGE_YEARS', (int)$maxAgeYear);
+      }
+      
+      $ageRangeString = $minYearText . $minAndText . $minMonthText . ' - ' . $maxYearText . $maxAndText . $maxMonthText;
       
       return $ageRangeString;
     }

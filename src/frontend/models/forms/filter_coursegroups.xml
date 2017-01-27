@@ -1,9 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
 	<fields name="filter" addfieldpath="/components/com_aftms/models/fields">
+    
+    <field
+      name="campus_id"
+      type="Campuses"
+      label="COM_AFTMS_FILTER_CAMPUS"
+      description="COM_AFTMS_FILTER_CENTRE_DESC"
+      language="true"
+      multiple="true"
+      default="none">
+    </field>
+    
+    <field
+      name="level"
+      type="checkboxes"
+      label="COM_AFTMS_FILTER_LEVEL"
+      description="COM_AFTMS_FILTER_LEVEL_DESC"
+      default="none">
+      <option value="1">COM_AFTMS_BEGINNER</option>
+      <option value="2">COM_AFTMS_INTERMEDIATE</option>
+      <option value="3">COM_AFTMS_ADVANCED</option>
+    </field>
+    
+    <field 
+      name="age"
+      type="number"
+      label="COM_AFTMS_FILTER_AGE"
+      description="COM_AFTMS_FILTER_AGE_DESC"
+      default=""
+      min="0"
+      max="150"
+      step="1"
+    />
     <field
       name="category_id"
-      type="AFTMSCategory"
+      type="AFTMSCategoryCheckboxes"
       label="JOPTION_FILTER_CATEGORY"
       description="JOPTION_FILTER_CATEGORY_DESC"
       extension="com_aftms.coursecategories"
@@ -14,22 +46,12 @@
     </field>
 
     <field
-      name="campus_id"
-      type="Campuses"
-      label="COM_AFTMS_FILTER_CENTRE"
-      description="COM_AFTMS_FILTER_CENTRE_DESC"
-      language="true"
-      multiple="true"
-      default="none">
-    </field>
-
-    <field
       name="frequency"
-      type="checkboxes"
+      type="list"
       label="COM_AFTMS_FILTER_FREQUENCY"
       description="COM_AFTMS_FILTER_FREQUENCY_DESC"
-      multiple="true"
-      default="none">
+      default="">
+      <option value=""></option>
       <option value="1">COM_AFTMS_FILTER_FREQUENCY_ONCE</option>
       <option value="2">COM_AFTMS_FILTER_FREQUENCY_TWICE</option>
       <option value="3">COM_AFTMS_FILTER_FREQUENCY_THREE_TIME</option>
@@ -38,16 +60,17 @@
     </field>
 
     <field
-      name="level_id"
-      type="AFTMSCategory"
-      label="COM_AFTMS_FILTER_LEVEL"
-      description="COM_AFTMS_FILTER_LEVEL_DESC"
+      name="advanced_level_id"
+      type="AFTMSCategoryList"
+      label="COM_AFTMS_FILTER_ADVANCED_LEVEL"
+      description="COM_AFTMS_FILTER_ADVANCED_LEVEL_DESC"
       extension="com_aftms.levels"
       language="true"
       published="1"
-      multiple="true"
-      default="none">
+      default="">
+      <option value=""></option>
     </field>
+     
 	</fields>
   
 	<fields name="list">

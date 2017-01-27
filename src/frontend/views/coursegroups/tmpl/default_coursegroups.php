@@ -38,7 +38,7 @@ $defaultCourseImage= JUri::base() . '/media/com_aftms/images/default_course.png'
       </a>
     </div>
     <div class="span2">
-      <?php echo $item->category_title; ?></small>
+      <?php echo AFTMSHelper::getAgeRangeLabel($item->min_month, $item->min_year, $item->max_month, $item->max_year); ?></small>
     </div>
     <div class="span2">
       <?php echo $item->category_title; ?></small>
@@ -47,6 +47,7 @@ $defaultCourseImage= JUri::base() . '/media/com_aftms/images/default_course.png'
       <?php echo $item->simple_lvl_text; ?></small>
     </div>
   </div>
+  <?php echo JLayoutHelper::render('joomla.course.list', $item->courses); ?>
 <?php endforeach; ?>
 
 <div class="clearfix"></div>

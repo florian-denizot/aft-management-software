@@ -70,7 +70,6 @@ class AFTMSModelCoursegroups extends DradSiteModelList
         'filter', 
         array(
           'category_id' => '', 
-          'frequency' => '',
           'level_id' => '',
           'campus_id'=> ''
         )
@@ -82,14 +81,20 @@ class AFTMSModelCoursegroups extends DradSiteModelList
     $categoryId = $app->getUserStateFromRequest($this->context . '.filter.category_id', 'filter_category_id');
 		$this->setState('filter.category_id', $categoryId);
     
-    $frequency = $app->getUserStateFromRequest($this->context . '.filter.frequency', 'filter_frequency');
-		$this->setState('filter.frequency', $frequency);
+    $level = $app->getUserStateFromRequest($this->context . '.filter.level', 'filter_level');
+    $this->setState('filter.level', $level);
     
-    $levelId = $app->getUserStateFromRequest($this->context . '.filter.level_id', 'filter_level_id');
-		$this->setState('filter.level_id', $levelId);
+    $age = $app->getUserStateFromRequest($this->context . '.filter.age', 'filter_age');
+    $this->setState('filter.age', $age);
     
     $campusId = $app->getUserStateFromRequest($this->context . '.filter.campus_id', 'filter_campus_id');
 		$this->setState('filter.campus_id', $campusId);
+    
+    $frequency = $app->getUserStateFromRequest($this->context . '.filter.frequency', 'filter_frequency');
+		$this->setState('filter.frequency', $frequency);
+    
+    $advancedlevelId = $app->getUserStateFromRequest($this->context . '.filter.advanced_level_id', 'filter_level_id');
+		$this->setState('filter.advanced_level_id', $advancedlevelId);
     
 		// List state information.
 		parent::populateState($ordering, $direction);
@@ -124,7 +129,7 @@ class AFTMSModelCoursegroups extends DradSiteModelList
     
     $query = parent::getListQuery();
     
-    $query->select('a.typeid, a.catid, a.min_lvl, a.max_lvl, a.simple_lvl, a.featured, a.image_ext')
+    $query->select('a.typeid, a.catid, a.min_lvl, a.max_lvl, a.simple_lvl, a.featured, a.image_ext, a.min_year, a.min_month, a.max_year, a.max_month')
       ->where('a.published = 1');
     
     // Join over the categories.
@@ -132,7 +137,7 @@ class AFTMSModelCoursegroups extends DradSiteModelList
 			->join('LEFT', '#__categories AS cat ON cat.id = a.catid')
       ->where('cat.extension = "com_aftms.coursecategories"');
       
-    // Join over the levels.
+    // Join over the advanced levels.
     $query->select('lvl1.title AS minimum_level, lvl2.title AS maximum_level');
 		$query->join('LEFT', '#__categories AS lvl1 ON lvl1.id = a.min_lvl')
       ->where('lvl1.extension = "com_aftms.levels"');
@@ -164,32 +169,36 @@ class AFTMSModelCoursegroups extends DradSiteModelList
 			}
 		}
     
-    // Filter by level.
-		$levelID = $this->getState('filter.level_id');
+    // Filter by Age.
+		$age = $this->getState('filter.age');
     
-		if (is_numeric($levelID))
-		{    
-			$lvl_tbl = JTable::getInstance('Category', 'JTable');
-			$lvl_tbl->load($levelID);
-			$rgt = $lvl_tbl->rgt;
-			$lft = $lvl_tbl->lft;
-      
-			$query->where('lvl1.lft <= ' . (int) $lft)
-				->where('lvl2.rgt >= ' . (int) $rgt);
+		if (is_numeric($age))
+		{      
+			$query->where('a.min_year <= ' . $age)
+        ->where('a.max_year' >= ' . $age');
 		}
-    elseif (is_array($levelID) && (count($levelID) > 0))
-    {
-			JArrayHelper::toInteger($levelID);
-			$levelID = implode(',', $levelID);
+    
+    // Filter by level.
+		$level = $this->getState('filter.level');
+    
+		if (is_numeric($level))
+		{      
+			$query->where('a.simple_lvl = ' . $level);
+		}
+    elseif (is_array($level) && (count($level) > 0))
+		{
+			JArrayHelper::toInteger($level);
+			$level = implode(',', $level);
 
-			if (!empty($levelID))
+			if (!empty($level))
 			{
-				$query->where('a.catid IN (' . $levelID . ')');
+				$query->where('a.simple_lvl IN (' . $level . ')');
 			}
 		}
     
     // Filter by campus.
-		$campusID = $this->getState('filter.campus_id');
+		/* 
+    $campusID = $this->getState('filter.campus_id');
     
 		if(is_numeric($campusID))
 		{    
@@ -213,6 +222,7 @@ class AFTMSModelCoursegroups extends DradSiteModelList
       JArrayHelper::toInteger($campusID);
 			$campusID = implode(',', $campusID);
     }
+    */
     
     // Filter by frequency.
     $frequency = $this->getState('filter.frequency');
@@ -221,10 +231,6 @@ class AFTMSModelCoursegroups extends DradSiteModelList
 		{
       $query->where('( LENGTH(co.date_pattern) - LENGTH( REPLACE( co.date_pattern, "COM", "" ) ) ) / LENGTH("COM") = ' . $frequency );
     }
-    
-    // Filter by registration deadline
-    //$query->where('(DATEDIFF(co.end_date, co.start_date) / 2) > DATEDIFF(NOW(), co.start_date)') 
-    //    ->where('co.end_date > CURRENT_DATE');
     
     $query->order($this->getState('list.ordering', 'a.ordering') . ' ' . $this->getState('list.direction', 'ASC'));
     
@@ -260,9 +266,145 @@ class AFTMSModelCoursegroups extends DradSiteModelList
     
     foreach($items as $item)
     {
+      // Get the label for the simple level categorizaion
       $item->simple_lvl_text = AFTMSHelper::getSimpleLevelLabel($item->simple_lvl);
+      
+      $item->courses = $this->processCourses($this->getCourses($item->id));
     }
     
     return $items;
+  }
+  
+  private function getCourses($courseGroupId)
+  {
+    $db = $this->getDbo();
+		$query = $db->getQuery(true);
+    
+    $query->select('b.id, b.title, b.start_date, b.end_date, b.date_pattern, b.price_override, b.url, b.campusid')
+      ->from('#__aftms_courses AS b')
+      ->where('b.published = 1')
+      ->where('(DATEDIFF(b.end_date, b.start_date) / 2) > DATEDIFF(NOW(), b.start_date)') 
+      ->where('b.end_date > CURRENT_DATE')
+      ->order('b.start_date');
+    
+    // Manage association dependant filters and join
+    if(JLanguageAssociations::isEnabled())
+    {
+      // Filter courses from current coursegroup
+      $groupAssocIds = DradLanguageAssociations::getAssociationIds('com_aftms', '#__aftms_course_groups', 'com_aftms.coursegroup', $courseGroupId, 'id', 'alias', null); 
+      $groupIds = implode(',', $groupAssocIds);
+      
+      $query->where('b.groupid IN (' . $groupIds . ')');
+      
+      // Filter by campus.
+      $campusId = $this->getState('filter.campus_id');
+      
+      if(is_numeric($campusId))
+      {    
+        $campusAssocIds = DradLanguageAssociations::getAssociationIds('com_aftms', '#__aftms_campuses', 'com_aftms.centre', $campusId, 'id', 'alias', null); 
+        $campusIds = implode(',', $campusAssocIds);
+
+        $query->where('b.campusid IN (' . $campusIds . ')');
+      }
+      elseif(is_array($campusId) && (count($campusId) > 0))
+      {
+        $campusIds = '';
+        
+        foreach($campusId as $campus_id)
+        {
+          $campusAssocIds = DradLanguageAssociations::getAssociationIds('com_aftms', '#__aftms_campuses', 'com_aftms.centre', $campus_id, 'id', 'alias', null); 
+          $campusIds = ($campusIds ? $campusIds .',':'') . implode(',', $campusAssocIds);
+        }
+        
+        $query->where('b.campusid IN (' . $campusIds . ')');
+      }
+    }
+    else
+    {
+      // Filter by the current coursegroup
+      $query->where('b.groupid = ' . $courseGroupId);
+      
+      // Filter by campus
+      $campusId = $this->getState('filter.campus_id');
+    
+      if(is_numeric($campusId))
+      {
+        $query->where('b.campusid = ' . $campusId);
+      }
+      elseif(is_array($campusId) && (count($campusId) > 0))
+      {
+        JArrayHelper::toInteger($campusId);
+        $campusIds = implode(',', $campusId);
+        
+        $query->where('b.campusid IN (' . $campusIds . ')');
+      }
+    }
+    
+    $db->setQuery($query);
+      
+    return $db->loadObjectList();
+  }
+  
+  private function processCourses($courses)
+  {    
+    $lang = JFactory::getLanguage();
+    
+    if(count($courses))
+    {
+      foreach($courses as $courseindex => $course)
+      {
+        // Transform string dates to JDate objects 
+        $course->start_date = new JDate($course->start_date);
+        $course->end_date = new JDate($course->end_date);
+
+        //load date pattern field as an array
+        $datePattern = new JRegistry;
+        $datePattern->loadString($course->date_pattern);
+        $course->date_pattern = $datePattern->toArray();
+
+        $course->days_times = AFTMSHelper::displayDatePatterns($course->date_pattern);
+
+        if(JLanguageAssociations::isEnabled())
+        { 
+          // Filter courses by campus
+          $campusAssociations = JLanguageAssociations::getAssociations('com_aftms', '#__aftms_campuses', 'com_aftms.campus', $course->campusid, 'id', 'alias', null); 
+          
+          foreach ($campusAssociations as $tag => $campusAssociation)
+          {
+            $slug = explode(':', $campusAssociation->id);
+            $campusAssociations[$tag]->simple_id = $slug[0];
+          }
+          
+          // Select the current language association
+          if(isset($campusAssociations[$lang->getTag()]))
+          {
+            $course->campusid = $campusAssociations[$lang->getTag()]->simple_id;
+          }
+          elseif(isset($campusAssociations['*']))
+          {
+            $course->campusid = $campusAssociations['*']->simple_id;
+          }
+        }
+       
+        $campus = JTable::getInstance('Campus', 'AFTMSTable');
+        $campus->load($course->campusid);
+        
+        $course->campus_name = $campus->title;
+
+        // Filter by frequency
+        $frequency = $this->getState('filter.frequency');
+
+        if (is_numeric($frequency))
+        {
+          if(!is_array($course->date_pattern['weekday']) 
+            || count($course->date_pattern['weekday']) != (int)$frequency)
+          {
+            unset($courses[$courseindex]);
+          }
+        }
+      }
+    }
+    
+    return $courses;
   }
 }

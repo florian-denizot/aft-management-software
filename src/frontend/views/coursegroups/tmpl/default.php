@@ -72,7 +72,7 @@ $filterFields = $this->filterForm->getFieldset('filter');
           </div>
         <?php else : ?>
           <?php echo $this->loadTemplate('coursegroups'); ?>
-          <?php echo JLayoutHelper::render('joomla.form.letmeknow', $this); ?>
+          <?php echo $this->loadTemplate('letmeknow'); ?>
         <?php endif ?>
       </div>
     </div>
